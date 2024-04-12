@@ -5,3 +5,5 @@ dependencies:
   - python=3.9
   - pip
   - django>=3.2
+  - pip:
+      - django-cors-headers

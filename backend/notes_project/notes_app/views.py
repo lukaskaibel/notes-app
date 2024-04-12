@@ -76,7 +76,7 @@ def note_edit(request):
 
 @method_decorator(csrf_exempt, name="dispatch")
 def note_delete(request):
-    if request.method == "POST":
+    if request.method == "DELETE":
         try:
             data = json.loads(request.body)
             pk = data["id"]  # Ensure this 'id' corresponds to the primary key
