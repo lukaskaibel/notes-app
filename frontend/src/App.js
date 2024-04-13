@@ -5,6 +5,9 @@ import { deleteNote } from "./utilities/deleteNote";
 import "./style/style.css";
 import NoteView from "./NoteView";
 import NoteList from "./NoteList";
+import { editNote } from "./utilities/editNote";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPenToSquare } from "@fortawesome/free-solid-svg-icons";
 
 function App() {
   const [notes, setNotes] = useState([]);
@@ -22,8 +25,12 @@ function App() {
     }
   }
 
+  async function createNote() {
+    const newNote = await createNote({ id: -1, title: "", content: "" });
+    setNotes([...notes, newNote]);
+  }
+
   async function updateNote(updatedNote) {
-    console.log("Updating Note");
     setNotes(
       notes.map((note) => {
         if (note.id === updatedNote.id) {
@@ -32,10 +39,10 @@ function App() {
         return note;
       })
     );
+    await editNote(updatedNote);
   }
 
   function getSelectedNote() {
-    console.log(notes.find((note) => note.id === selectedNoteId));
     if (Array.isArray(notes)) {
       return notes.find((note) => note.id === selectedNoteId);
     }
@@ -45,7 +52,12 @@ function App() {
   return (
     <div className="application-container">
       <div className="side-panel">
-        <h1>Notes</h1>
+        <div className="side-panel-header">
+          <h1>Notes</h1>
+          <button onClick={createNote}>
+            <FontAwesomeIcon icon={faPenToSquare} />
+          </button>
+        </div>
         <NoteList
           notes={notes}
           selectedNoteId={selectedNoteId}

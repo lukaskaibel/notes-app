@@ -12,6 +12,26 @@ textarea {
   font-family: inherit;
 }
 
+button {
+  border: none; /* Ensures there is no visible border unless specified */
+  background-color: transparent; /* Keeps the background of the button transparent */
+  font-size: larger; /* Increases the font size, adjust as necessary */
+  width: 35px; /* Sets a specific width */
+  height: 35px; /* Sets the height equal to the width to form a square */
+  display: flex; /* Using flex to center the icon inside the button */
+  align-items: center; /* Centers the icon vertically */
+  justify-content: center; /* Centers the icon horizontally */
+  border-radius: 5px; /* Correct border-radius with a unit */
+}
+
+button:hover {
+  background-color: #aaaaaa40;
+}
+
+button:active {
+  background-color: #aaaaaa80;
+}
+
 .application-container {
   width: 100%;
   height: 100vh;
@@ -39,4 +59,11 @@ textarea {
   width: 250; /* Set the default width */
   background-color: #eeeeee;
   padding: 20px;
+}
+
+.side-panel-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
 }
