@@ -2,78 +2,63 @@ import React, { useEffect, useState } from "react";
 import { createNote } from "./utilities/createNote";
 import { getNotes } from "./utilities/getNotes";
 import { deleteNote } from "./utilities/deleteNote";
+import "./style/style.css";
+import NoteView from "./NoteView";
+import NoteList from "./NoteList";
 
 function App() {
   const [notes, setNotes] = useState([]);
-  const [newNote, setNewNote] = useState({ title: "", content: "" });
+  const [selectedNoteId, setSelectedNoteId] = useState(-1);
 
   useEffect(() => {
-    // Define an async function inside the effect
-    async function fetchNotes() {
-      const loadedNotes = await getNotes(); // Assuming getNotes() is defined to fetch data
-      setNotes(loadedNotes);
-    }
-
-    // Call the async function
-    fetchNotes();
-
-    // Optional: Cleanup function if necessary
-    return () => {
-      // Cleanup code here (e.g., aborting the fetch)
-    };
+    initialLoad();
   }, []);
 
-  const handleInputChange = (e) => {
-    setNewNote({
-      ...newNote,
-      [e.target.name]: e.target.value,
-    });
-  };
+  async function initialLoad() {
+    const loadedNotes = await getNotes();
+    setNotes(loadedNotes);
+    if (loadedNotes.length > 0) {
+      setSelectedNoteId(loadedNotes[0].id);
+    }
+  }
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    await createNote(newNote);
-    setNewNote({ title: "", content: "" });
-    const notes = await getNotes();
-    setNotes(notes);
-  };
+  async function updateNote(updatedNote) {
+    console.log("Updating Note");
+    setNotes(
+      notes.map((note) => {
+        if (note.id === updatedNote.id) {
+          return updatedNote;
+        }
+        return note;
+      })
+    );
+  }
 
-  const handleDelete = async (id) => {
-    await deleteNote(id);
-    const notes = await getNotes();
-    setNotes(notes);
-  };
+  function getSelectedNote() {
+    console.log(notes.find((note) => note.id === selectedNoteId));
+    if (Array.isArray(notes)) {
+      return notes.find((note) => note.id === selectedNoteId);
+    }
+    return null; // or however you wish to handle this case
+  }
 
   return (
-    <div>
-      <h1>Notes</h1>
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          name="title"
-          value={newNote.title}
-          onChange={handleInputChange}
-          placeholder="Title"
-          required
+    <div className="application-container">
+      <div className="side-panel">
+        <h1>Notes</h1>
+        <NoteList
+          notes={notes}
+          selectedNoteId={selectedNoteId}
+          setSelectedNoteId={setSelectedNoteId}
         />
-        <textarea
-          name="content"
-          value={newNote.content}
-          onChange={handleInputChange}
-          placeholder="Content"
-          required
-        />
-        <button type="submit">Add Note</button>
-      </form>
-      <ul>
-        {notes.map((note) => (
-          <li key={note.id}>
-            <h2>{note.title}</h2>
-            <p>{note.content}</p>
-            <button onClick={() => handleDelete(note.id)}>Delete</button>
-          </li>
-        ))}
-      </ul>
+      </div>
+      <div className="selected-note-container">
+        {!!getSelectedNote() ? (
+          <NoteView note={getSelectedNote()} updateNote={updateNote} />
+        ) : (
+          <p>No note selected</p>
+        )}
+      </div>
     </div>
   );
 }

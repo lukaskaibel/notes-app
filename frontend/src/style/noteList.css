@@ -1,0 +1,20 @@
+.note-list {
+  display: flex;
+  flex-direction: column;
+  row-gap: 10px;
+  box-sizing: border-box;
+  overflow: auto;
+}
+
+.note-list-item {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  padding: 10px 15px;
+  box-sizing: border-box;
+}
+
+.note-list-item.selected {
+  background-color: #cccccc;
+  border-radius: 5px;
+}

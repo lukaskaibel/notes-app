@@ -1,0 +1,37 @@
+.note {
+  display: flex;
+  flex-direction: column;
+  row-gap: 30px;
+  width: 100%; /* Make it responsive, take full width of the container */
+  max-width: 700px; /* Maximum width is 700px */
+  min-width: 100px; /* Optional: minimum width can be set as needed */
+  height: 100%;
+}
+
+.note-title {
+  font-size: large;
+  font-weight: bold;
+  border-color: transparent;
+  width: 100%;
+  height: auto;
+  box-sizing: border-box;
+}
+
+.note-title:focus {
+  outline: none;
+}
+
+.note-content {
+  font-size: medium;
+  border-color: transparent;
+  width: 100%;
+  min-height: 100%;
+  resize: none;
+  flex-grow: 1;
+  height: 100%; /* Take full remaining height of its container */
+  box-sizing: border-box;
+}
+
+.note-content:focus {
+  outline: none;
+}
