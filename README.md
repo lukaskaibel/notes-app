@@ -49,8 +49,8 @@ cd notes-app
 2. Set up a virtual environment (optional, but recommended):
 
    ```bash
-   conda create --name notesenv python=3.7
-   conda activate notesenv
+   conda create env
+   conda activate notes_env
    ```
 
 3. Run database migrations:
