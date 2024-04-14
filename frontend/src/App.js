@@ -17,21 +17,38 @@ function App() {
     initialLoad();
   }, []);
 
+  useEffect(() => {
+    setNotes(
+      notes.filter((note) => {
+        if (
+          note.id !== selectedNoteId &&
+          note.title.trim() === "" &&
+          note.content.trim() === ""
+        ) {
+          deleteNote(note.id);
+          return false;
+        }
+        return true;
+      })
+    );
+  }, [selectedNoteId]);
+
   async function initialLoad() {
     const loadedNotes = await getNotes();
-    setNotes(loadedNotes);
+    updateNotes(loadedNotes);
     if (loadedNotes.length > 0) {
       setSelectedNoteId(loadedNotes[0].id);
     }
   }
 
-  async function createNote() {
+  async function addNote() {
     const newNote = await createNote({ id: -1, title: "", content: "" });
-    setNotes([...notes, newNote]);
+    setSelectedNoteId(newNote.id);
+    updateNotes([...notes, newNote]);
   }
 
   async function updateNote(updatedNote) {
-    setNotes(
+    updateNotes(
       notes.map((note) => {
         if (note.id === updatedNote.id) {
           return updatedNote;
@@ -40,6 +57,23 @@ function App() {
       })
     );
     await editNote(updatedNote);
+  }
+
+  function updateNotes(notes) {
+    // Sort the filtered notes by their `updated_at` timestamp in descending order
+    const sortedNotes = notes.sort((a, b) => {
+      // Convert timestamps to Date objects for comparison
+      const dateA = new Date(a.updated_at);
+      const dateB = new Date(b.updated_at);
+      return dateB - dateA; // Sort by most recent first
+    });
+
+    setNotes(sortedNotes);
+  }
+
+  async function handleDelete(id) {
+    updateNotes(notes.filter((note) => note.id !== id));
+    await deleteNote(id);
   }
 
   function getSelectedNote() {
@@ -54,7 +88,7 @@ function App() {
       <div className="side-panel">
         <div className="side-panel-header">
           <h1>Notes</h1>
-          <button onClick={createNote}>
+          <button onClick={addNote}>
             <FontAwesomeIcon icon={faPenToSquare} />
           </button>
         </div>
@@ -62,6 +96,7 @@ function App() {
           notes={notes}
           selectedNoteId={selectedNoteId}
           setSelectedNoteId={setSelectedNoteId}
+          deleteNote={handleDelete}
         />
       </div>
       <div className="selected-note-container">

@@ -1,4 +1,5 @@
 export async function createNote(note) {
+  console.log("Creating Note");
   try {
     // Specify the request options
     const requestOptions = {

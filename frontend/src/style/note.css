@@ -8,6 +8,14 @@
   height: 100%;
 }
 
+.note-header {
+  width: 100%;
+  justify-content: center;
+  text-align: center;
+  color: gray;
+  box-sizing: border-box;
+}
+
 .note-title {
   font-size: large;
   font-weight: bold;

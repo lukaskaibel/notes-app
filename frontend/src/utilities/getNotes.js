@@ -12,6 +12,7 @@ export async function getNotes() {
         id: entry.pk,
         title: entry.fields.title,
         content: entry.fields.content,
+        updated_at: entry.updated_at,
       };
     });
     console.log("Success:", notes);

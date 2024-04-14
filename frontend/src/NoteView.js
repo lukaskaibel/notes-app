@@ -1,15 +1,18 @@
 import React, { useEffect, useState } from "react";
+import moment from "moment";
 import "./style/note.css";
 
 function NoteView({ note, updateNote }) {
   // Local state for controlled input fields
   const [title, setTitle] = useState(note.title);
   const [content, setContent] = useState(note.content);
+  const [updatedAt, setUpdatedAt] = useState(new Date());
 
   useEffect(() => {
     if (!!note) {
       setTitle(note.title);
       setContent(note.content);
+      setUpdatedAt(note.updated_at);
     }
   }, [note]); // Fetch note whenever noteId changes
 
@@ -38,8 +41,16 @@ function NoteView({ note, updateNote }) {
     });
   };
 
+  const formattedDate = moment(note.updated_at).format("D. MMMM YYYY");
+  const formattedTime = moment(note.updated_at).format("H:mm");
+
   return (
     <div className="note">
+      <div className="note-header">
+        <div>
+          {formattedDate} at {formattedTime}
+        </div>
+      </div>
       <input
         type="text"
         className="note-title"

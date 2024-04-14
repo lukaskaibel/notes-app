@@ -22,7 +22,12 @@ def note_detail(request):
             note = get_object_or_404(Note, pk=pk)
             # Return note details as JSON
             return JsonResponse(
-                {"id": note.pk, "title": note.title, "content": note.content}
+                {
+                    "id": note.pk,
+                    "title": note.title,
+                    "content": note.content,
+                    "updated_at": note.updated_at,
+                }
             )
         except KeyError:
             return JsonResponse({"error": "Missing note ID in request"}, status=400)
@@ -41,7 +46,12 @@ def note_create(request):
             data = json.loads(request.body)
             note = Note.objects.create(title=data["title"], content=data["content"])
             return JsonResponse(
-                {"id": note.pk, "title": note.title, "content": note.content},
+                {
+                    "id": note.pk,
+                    "title": note.title,
+                    "content": note.content,
+                    "updated_at": note.updated_at,
+                },
                 status=201,
             )
         except (KeyError, ValueError) as e:
@@ -63,7 +73,12 @@ def note_edit(request):
             )  # Update the content if provided
             note.save()
             return JsonResponse(
-                {"id": note.pk, "title": note.title, "content": note.content},
+                {
+                    "id": note.pk,
+                    "title": note.title,
+                    "content": note.content,
+                    "updated_at": note.updated_at,
+                },
                 status=200,
             )
         except KeyError:
