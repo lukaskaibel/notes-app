@@ -48,15 +48,15 @@ function App() {
   }
 
   async function updateNote(updatedNote) {
+    const editedNote = await editNote(updatedNote);
     updateNotes(
       notes.map((note) => {
-        if (note.id === updatedNote.id) {
-          return updatedNote;
+        if (note.id === editedNote.id) {
+          return editedNote;
         }
         return note;
       })
     );
-    await editNote(updatedNote);
   }
 
   function updateNotes(notes) {
