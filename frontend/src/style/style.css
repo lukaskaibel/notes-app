@@ -55,7 +55,7 @@ button:active {
   height: 100%;
   min-width: 250px;
   max-width: 250px;
-  width: 250; /* Set the default width */
+  width: 250;
   background-color: #eeeeee;
   padding: 20px;
 }

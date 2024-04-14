@@ -16,9 +16,9 @@ export async function getNotes() {
       };
     });
     console.log("Success:", notes);
-    return notes; // Return the data directly after it's been fetched and processed
+    return notes;
   } catch (error) {
     console.error("Error:", error);
-    return {}; // Return an empty object or appropriate error handling
+    return {};
   }
 }

@@ -3,7 +3,6 @@ import moment from "moment";
 import "./style/note.css";
 
 function NoteView({ note, updateNote }) {
-  // Local state for controlled input fields
   const [title, setTitle] = useState(note.title);
   const [content, setContent] = useState(note.content);
   const [updatedAt, setUpdatedAt] = useState(new Date());
@@ -14,27 +13,24 @@ function NoteView({ note, updateNote }) {
       setContent(note.content);
       setUpdatedAt(note.updated_at);
     }
-  }, [note]); // Fetch note whenever noteId changes
+  }, [note]);
 
-  // Render loading state while fetching the note
   if (!note) {
     return <p>Loading...</p>;
   }
 
-  // Handle title changes
   const handleTitleChange = (event) => {
     setTitle(event.target.value);
-    // Propagate changes to parent component
+
     updateNote({
       ...note,
       title: event.target.value,
     });
   };
 
-  // Handle content changes
   const handleContentChange = (event) => {
     setContent(event.target.value);
-    // Propagate changes to parent component
+
     updateNote({
       ...note,
       content: event.target.value,

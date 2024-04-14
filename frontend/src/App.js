@@ -60,12 +60,10 @@ function App() {
   }
 
   function updateNotes(notes) {
-    // Sort the filtered notes by their `updated_at` timestamp in descending order
     const sortedNotes = notes.sort((a, b) => {
-      // Convert timestamps to Date objects for comparison
       const dateA = new Date(a.updated_at);
       const dateB = new Date(b.updated_at);
-      return dateB - dateA; // Sort by most recent first
+      return dateB - dateA;
     });
 
     setNotes(sortedNotes);
@@ -80,7 +78,7 @@ function App() {
     if (Array.isArray(notes)) {
       return notes.find((note) => note.id === selectedNoteId);
     }
-    return null; // or however you wish to handle this case
+    return null;
   }
 
   return (
