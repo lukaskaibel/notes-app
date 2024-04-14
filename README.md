@@ -11,6 +11,10 @@ This application is a straightforward notes app, with a backend implemented in P
 - **Detailed Note Viewing:** Access detailed views of individual notes.
 - **JSON API Endpoints:** Programmatic interaction with notes through well-defined API endpoints.
 
+## Application Screenshot
+
+![Application Screenshot](images/application-screenshot.png)
+
 ## Installation
 
 ### Prerequisites
